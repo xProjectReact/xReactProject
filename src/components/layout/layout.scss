@@ -3,7 +3,22 @@
   border-left: 3px solid wheat;
   border-right: 3px solid wheat;
 
-  & > img {
+  & .liveStatusContainer {
+    position: absolute;
+    right: 3vw;
+    top: 2vh;
+    width: 26vw;
+  }
+
+  & .actionsContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: wheat;
+    top: 1vh;
+  }
+
+  & img {
     width: 40vw;
     margin-left: auto;
     margin-right: auto;
@@ -13,6 +28,19 @@
 
   & .locationDescriptionContainer {
     width: 44vw;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
+  & .charInfoMenu {
+    position: fixed;
+    top: 2vh;
+    left: 5vw;
+  }
+
+  & .locationTabsContainer {
+    width: fit-content;
     margin-left: auto;
     margin-right: auto;
     display: block;

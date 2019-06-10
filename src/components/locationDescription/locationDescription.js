@@ -3,7 +3,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import './locationDescription.scss';
 
-function locationDescription({ description }) {
+export default function locationDescription({ description, age, dispatch }) {
   return (
     <React.Fragment>
       <CssBaseline />
@@ -15,5 +15,3 @@ function locationDescription({ description }) {
     </React.Fragment>
   );
 }
-
-export default locationDescription;
