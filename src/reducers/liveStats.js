@@ -1,4 +1,4 @@
-import { UPDATE_AGE, UPDATE_SLEEP } from '../actions/types';
+import { UPDATE_SLEEP } from '../actions/types';
 
 const initialState = {
   // min = 0, max = 100
