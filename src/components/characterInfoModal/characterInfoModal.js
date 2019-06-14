@@ -67,7 +67,6 @@ function CharacterInfoModal() {
     <div>
       <Button onClick={toggleDrawer('left', true)} style={{ color: 'white' }}>
         <SettingsIcon />
-        <span>Info</span>
       </Button>
       <Drawer
         anchor='left'

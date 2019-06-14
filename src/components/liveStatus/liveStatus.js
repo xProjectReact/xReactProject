@@ -25,6 +25,9 @@ import OfflineBolt from '@material-ui/icons/OfflineBolt';
 import LocalHospital from '@material-ui/icons/LocalHospital';
 // import Accessibility from '@material-ui/icons/Accessibility';
 
+/* Arousal Icons */
+import FavoriteIcon from '@material-ui/icons/Favorite';
+
 import './liveStatus.scss';
 
 const useStyles = makeStyles(theme => ({
@@ -33,9 +36,10 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: 'wheat'
   },
   progressBarPosition: {
-    position: 'relative',
-    left: '30px',
-    width: '20vw'
+    position: 'absolute',
+    left: '2.5vw',
+    top: '40px',
+    width: '24vw'
   },
   timeInfoContainer: {
     justifyContent: 'center'
@@ -43,6 +47,12 @@ const useStyles = makeStyles(theme => ({
   timeInfo: {
     padding: theme.spacing(3, 2),
     textAlign: 'center'
+  },
+  icons: {
+    color: '#4ee44e'
+  },
+  avatarContainer: {
+    backgroundColor: '#282c34'
   }
 }));
 
@@ -51,7 +61,7 @@ function LiveStatus({
   moodValue,
   sleepValue,
   healthValue,
-  purityValue,
+  cleanlinessValue,
   hungerValue,
   arousalValue,
 
@@ -66,13 +76,13 @@ function LiveStatus({
 
   const moodIcon =
     moodValue < 25 ? (
-      <SentimentVeryDissatisfied />
+      <SentimentVeryDissatisfied className={classes.icons} />
     ) : moodValue < 50 ? (
-      <SentimentDissatisfied />
+      <SentimentDissatisfied className={classes.icons} />
     ) : moodValue < 75 ? (
-      <SentimentSatisfied />
+      <SentimentSatisfied className={classes.icons} />
     ) : (
-      <SentimentVerySatisfied />
+      <SentimentVerySatisfied className={classes.icons} />
     );
 
   return (
@@ -91,8 +101,8 @@ function LiveStatus({
       <Divider variant='middle' component='li' />
       <ListItem>
         <ListItemAvatar>
-          <Avatar>
-            <LocalHospital />
+          <Avatar className={classes.avatarContainer}>
+            <LocalHospital className={classes.icons} />
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary='Health' />
@@ -103,8 +113,8 @@ function LiveStatus({
       <Divider variant='middle' component='li' />
       <ListItem>
         <ListItemAvatar>
-          <Avatar>
-            <OfflineBolt />
+          <Avatar className={classes.avatarContainer}>
+            <OfflineBolt className={classes.icons} />
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary='Sleep' />
@@ -115,7 +125,7 @@ function LiveStatus({
       <Divider variant='middle' component='li' />
       <ListItem>
         <ListItemAvatar>
-          <Avatar>{moodIcon}</Avatar>
+          <Avatar className={classes.avatarContainer}>{moodIcon}</Avatar>
         </ListItemAvatar>
         <ListItemText primary='Mood' />
         <Container className={classes.progressBarPosition}>
@@ -125,17 +135,21 @@ function LiveStatus({
       <Divider variant='middle' component='li' />
       <ListItem>
         <ListItemAvatar>
-          <Avatar>{/* <ImageIcon /> */}</Avatar>
+          <Avatar className={classes.avatarContainer}>
+            {/* <ImageIcon /> */}
+          </Avatar>
         </ListItemAvatar>
-        <ListItemText primary='Purity' />
+        <ListItemText primary='Cleanliness' />
         <Container className={classes.progressBarPosition}>
-          <ProgressBar value={purityValue} />
+          <ProgressBar value={cleanlinessValue} />
         </Container>
       </ListItem>
       <Divider variant='middle' component='li' />
       <ListItem>
         <ListItemAvatar>
-          <Avatar>{/* <WorkIcon /> */}</Avatar>
+          <Avatar className={classes.avatarContainer}>
+            {/* <WorkIcon /> */}
+          </Avatar>
         </ListItemAvatar>
         <ListItemText primary='Hunger' />
         <Container className={classes.progressBarPosition}>
@@ -145,7 +159,9 @@ function LiveStatus({
       <Divider variant='middle' component='li' />
       <ListItem>
         <ListItemAvatar>
-          <Avatar>{/* <BeachAccessIcon /> */}</Avatar>
+          <Avatar className={classes.avatarContainer}>
+            <FavoriteIcon className={classes.icons} />
+          </Avatar>
         </ListItemAvatar>
         <ListItemText primary='Arousal' />
         <Container className={classes.progressBarPosition}>
@@ -161,7 +177,7 @@ const mapStateToProps = state => ({
   moodValue: state.liveStats.mood,
   sleepValue: state.liveStats.sleep,
   healthValue: state.liveStats.health,
-  purityValue: state.liveStats.purity,
+  cleanlinessValue: state.liveStats.cleanliness,
   hungerValue: state.liveStats.hunger,
   arousalValue: state.liveStats.arousal,
 

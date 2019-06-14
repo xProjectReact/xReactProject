@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { passTime } from '../../actions/actions';
+import { passTime, updateSleep, updateHunger } from '../../actions/actions';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import './actions.scss';
 
 import AccessTime from '@material-ui/icons/AccessTime';
-import { updateSleep } from '../../actions/actions';
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -17,12 +16,23 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Actions({ currentMinutes, currentHour, sleepValue, dispatch }) {
+function Actions({
+  currentMinutes,
+  currentHour,
+  // currentDay,
+  // currentMonth,
+  // currentYear,
+  sleepValue,
+  hungerValue,
+  dispatch
+}) {
   const classes = useStyles();
+
+  let sleep = sleepValue - 2;
+  let hunger = hungerValue - 2;
 
   let hour = currentHour;
   let minutes = currentMinutes + 30;
-  let sleep = sleepValue - 2;
 
   if (minutes > 59) {
     minutes = currentMinutes - 30;
@@ -36,6 +46,9 @@ function Actions({ currentMinutes, currentHour, sleepValue, dispatch }) {
   if (sleep < 0) {
     sleep = 0;
   }
+  if (hunger < 0) {
+    hunger = 0;
+  }
 
   return (
     <div className='actionsContainer'>
@@ -46,6 +59,7 @@ function Actions({ currentMinutes, currentHour, sleepValue, dispatch }) {
         onClick={() => {
           dispatch(passTime(hour, minutes));
           dispatch(updateSleep(sleep));
+          dispatch(updateHunger(hunger));
         }}
       >
         <AccessTime className={classes.leftIcon} />
@@ -58,6 +72,7 @@ function Actions({ currentMinutes, currentHour, sleepValue, dispatch }) {
 const mapStateToProps = state => ({
   // Stats Values
   sleepValue: state.liveStats.sleep,
+  hungerValue: state.liveStats.hunger,
 
   // Time Values
   currentYear: state.timeInfo.currentYear,

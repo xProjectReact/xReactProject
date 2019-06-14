@@ -1,17 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import home from '../../images/house.jpg';
+import CurrentImage from '../currentImage/currentImage';
 import LiveStatus from '../liveStatus/liveStatus';
 import Actions from '../actions/actions';
 import LocationDescription from '../locationDescription/locationDescription';
-import CharacterInfoModal from '../characterInfoModal/characterInfoModal';
+// import CharacterInfoModal from '../characterInfoModal/characterInfoModal';
 import LocationTabs from '../locationTabs/locationTabs';
 import './layout.scss';
 
-import { homeDescription } from '../../textData/textData';
+function Layout(props) {
+  const currentLocation = props.currentLocation;
+  const visibleLocations = {
+    homeIsVisible: props.homeIsVisible,
+    beachIsVisible: props.beachIsVisible,
+    mallIsVisible: props.mallIsVisible,
+    gymIsVisible: props.gymIsVisible
+  };
 
-function Layout() {
   return (
     <React.Fragment>
       <CssBaseline />
@@ -23,18 +30,23 @@ function Layout() {
               <Actions />
             </div>
           </div>
-          <img src={home} alt='home' className='homeImage' />
+          <div className='currentImageContainer'>
+            <CurrentImage />
+          </div>
           <div className='locationDescriptionContainer'>
-            <LocationDescription description={homeDescription} />
+            <LocationDescription />
           </div>
-          <div className='charInfoMenu'>
+          {/* <div className='charInfoMenu'>
             <CharacterInfoModal />
-          </div>
+          </div> */}
           <div className='locationTabsContainer'>
-            <LocationTabs />{' '}
+            <LocationTabs
+              visibleLocations={visibleLocations}
+              currentLocation={currentLocation}
+            />
           </div>
           {/* <div className='locationDescriptionContainer'>
-            <LocationDescription />{' '}
+            <LocationDescription />
           </div> */}
         </div>
       </Container>
@@ -42,4 +54,14 @@ function Layout() {
   );
 }
 
-export default Layout;
+const mapStateToProps = state => ({
+  //  Locations that should be displayed, boolean
+  currentLocation: state.locationInfo.currentLocation,
+
+  homeIsVisible: state.locationInfo.visibleLocations.homeIsVisible,
+  beachIsVisible: state.locationInfo.visibleLocations.beachIsVisible,
+  mallIsVisible: state.locationInfo.visibleLocations.mallIsVisible,
+  gymIsVisible: state.locationInfo.visibleLocations.gymIsVisible
+});
+
+export default connect(mapStateToProps)(Layout);

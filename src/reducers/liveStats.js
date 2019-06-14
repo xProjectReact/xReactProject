@@ -1,4 +1,5 @@
 import { UPDATE_SLEEP } from '../actions/types';
+import { UPDATE_HUNGER } from '../actions/types';
 
 const initialState = {
   // min = 0, max = 100
@@ -8,7 +9,7 @@ const initialState = {
   sleep: 100,
   energy: 100,
   arousal: 0,
-  purity: 100
+  cleanliness: 100
 };
 
 export default (state = initialState, action) => {
@@ -16,6 +17,10 @@ export default (state = initialState, action) => {
     case UPDATE_SLEEP:
       return Object.assign({}, state, {
         sleep: action.value
+      });
+    case UPDATE_HUNGER:
+      return Object.assign({}, state, {
+        hunger: action.value
       });
 
     default:
