@@ -7,11 +7,11 @@ import Tab from '@material-ui/core/Tab';
 
 import Home from '@material-ui/icons/Home';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import { updateCurrentMedia } from '../../actions/currentMediaActions';
 import {
-  updateCurrentImage,
   updateCurrentDescription,
   updateCurrentLocation
-} from '../../actions/actions';
+} from '../../actions/locationActions';
 
 /* Location Descriptions */
 import {
@@ -40,7 +40,12 @@ function LocationTabs(props) {
   const classes = useStyles();
   const [currentTab, setCurrentTab] = React.useState(0);
 
-  const { dispatch, visibleLocations, currentLocation } = props;
+  const {
+    dispatch,
+    visibleLocations,
+    currentLocation,
+    isInsideLocation
+  } = props;
 
   function changeCurrentTab(event, currentTab) {
     setCurrentTab(currentTab);
@@ -58,10 +63,10 @@ function LocationTabs(props) {
       >
         {visibleLocations.homeIsVisible && (
           <Tab
-            disabled={currentLocation === 'home'}
+            disabled={currentLocation === 'home' || isInsideLocation}
             onClick={() => {
               dispatch(updateCurrentLocation('home'));
-              dispatch(updateCurrentImage('home'));
+              dispatch(updateCurrentMedia(`locations/fromOutside/home.webp`));
               dispatch(updateCurrentDescription(homeDescription));
             }}
             className={classes.locationTab}
@@ -71,10 +76,16 @@ function LocationTabs(props) {
         )}
         {visibleLocations.beachIsVisible && (
           <Tab
-            disabled={currentLocation === 'beach'}
+            disabled={currentLocation === 'beach' || isInsideLocation}
             onClick={() => {
               dispatch(updateCurrentLocation('beach'));
-              dispatch(updateCurrentImage('beach'));
+              dispatch(
+                updateCurrentMedia(
+                  `locations/${
+                    isInsideLocation ? 'fromInside' : 'fromOutside'
+                  }/beach.webp`
+                )
+              );
               dispatch(updateCurrentDescription(beachDescription));
             }}
             className={classes.locationTab}
@@ -84,10 +95,16 @@ function LocationTabs(props) {
         )}
         {visibleLocations.mallIsVisible && (
           <Tab
-            disabled={currentLocation === 'mall'}
+            disabled={currentLocation === 'mall' || isInsideLocation}
             onClick={() => {
               dispatch(updateCurrentLocation('mall'));
-              dispatch(updateCurrentImage('mall'));
+              dispatch(
+                updateCurrentMedia(
+                  `locations/${
+                    isInsideLocation ? 'fromInside' : 'fromOutside'
+                  }/mall.webp`
+                )
+              );
               dispatch(updateCurrentDescription(mallDescription));
             }}
             className={classes.locationTab}
@@ -97,10 +114,16 @@ function LocationTabs(props) {
         )}
         {visibleLocations.gymIsVisible && (
           <Tab
-            disabled={currentLocation === 'gym'}
+            disabled={currentLocation === 'gym' || isInsideLocation}
             onClick={() => {
               dispatch(updateCurrentLocation('gym'));
-              dispatch(updateCurrentImage('gym'));
+              dispatch(
+                updateCurrentMedia(
+                  `locations/${
+                    isInsideLocation ? 'fromInside' : 'fromOutside'
+                  }/gym.webp`
+                )
+              );
               dispatch(updateCurrentDescription(gymDescription));
             }}
             className={classes.locationTab}
@@ -113,10 +136,9 @@ function LocationTabs(props) {
   );
 }
 
-// const mapStateToProps = state => ({
-//   // Locations that should be displayed
-//   currentLocation: state.locationInfo.currentLocation
+const mapStateToProps = state => ({
+  // Locations Info
+  isInsideLocation: state.locationInfo.isInsideLocation
+});
 
-// });
-
-export default connect()(LocationTabs);
+export default connect(mapStateToProps)(LocationTabs);

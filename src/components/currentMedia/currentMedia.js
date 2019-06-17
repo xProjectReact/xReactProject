@@ -12,14 +12,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function CurrentImage({ source }) {
+function CurrentMedia({ path }) {
   const classes = useStyles();
 
   return (
     <Card className={classes.card}>
       <CardMedia
         className={classes.media}
-        image={require(`../../images/${source}.webp`)}
+        image={require(`../../media/${path}`)}
         title='Image'
       />
     </Card>
@@ -28,7 +28,7 @@ function CurrentImage({ source }) {
 
 const mapStateToProps = state => ({
   // Image Source
-  source: state.locationInfo.source
+  path: state.currentMedia.path
 });
 
-export default connect(mapStateToProps)(CurrentImage);
+export default connect(mapStateToProps)(CurrentMedia);

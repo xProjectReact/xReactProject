@@ -1,19 +1,18 @@
-import { PASS_TIME } from '../actions/types';
+import { PASS_MINUTES } from '../actions/types';
 
 const initialState = {
-  currentYear: 2019,
-  currentMonth: 5,
-  currentDay: 8,
-  currentHour: 12,
-  currentMinutes: 0
+  currentDate: new Date(2019, 5, 1, 12, 0) // Year, month, day, hour, minutes
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case PASS_TIME:
+    case PASS_MINUTES:
       return Object.assign({}, state, {
-        currentHour: action.hour,
-        currentMinutes: action.minutes
+        currentDate: new Date(
+          state.currentDate.setTime(
+            state.currentDate.getTime() + action.minutes * 60 * 1000
+          )
+        )
       });
 
     default:

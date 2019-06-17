@@ -1,11 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { passTime, updateSleep, updateHunger } from '../../actions/actions';
+import { passMinutes } from '../../actions/timeActions';
+import { updateCurrentMedia } from '../../actions/currentMediaActions';
+import { updateInsideLocation } from '../../actions/locationActions';
+import { updateHunger, updateSleep } from '../../actions/liveStatsActions';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import './actions.scss';
 
 import AccessTime from '@material-ui/icons/AccessTime';
+import NavigationIcon from '@material-ui/icons/Navigation';
+
+import HomeActions from './specificLocationActions/homeActions';
+import BeachActions from './specificLocationActions/beachActions';
+import MallActions from './specificLocationActions/mallActions';
+import GymActions from './specificLocationActions/gymActions';
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -16,50 +25,58 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Actions({
-  currentMinutes,
-  currentHour,
-  // currentDay,
-  // currentMonth,
-  // currentYear,
-  sleepValue,
-  hungerValue,
-  dispatch
-}) {
+function Actions(props) {
   const classes = useStyles();
-
-  let sleep = sleepValue - 2;
-  let hunger = hungerValue - 2;
-
-  let hour = currentHour;
-  let minutes = currentMinutes + 30;
-
-  if (minutes > 59) {
-    minutes = currentMinutes - 30;
-    if (hour === 23) {
-      hour = 0;
-    } else {
-      hour++;
-    }
-  }
-
-  if (sleep < 0) {
-    sleep = 0;
-  }
-  if (hunger < 0) {
-    hunger = 0;
-  }
+  const { dispatch, isInsideLocation, currentLocation } = props;
 
   return (
     <div className='actionsContainer'>
+      {!isInsideLocation ? (
+        <Button
+          variant='contained'
+          color='secondary'
+          className={classes.button}
+          onClick={() => {
+            dispatch(updateInsideLocation(true));
+            dispatch(
+              updateCurrentMedia(`locations/fromInside/${currentLocation}.webp`)
+            );
+          }}
+        >
+          <NavigationIcon className={classes.leftIcon} />
+          {`Go Inside`}
+        </Button>
+      ) : (
+        <Button
+          variant='contained'
+          color='secondary'
+          className={classes.button}
+          onClick={() => {
+            dispatch(updateInsideLocation(false));
+            dispatch(
+              updateCurrentMedia(
+                `locations/fromOutside/${currentLocation}.webp`
+              )
+            );
+          }}
+        >
+          <NavigationIcon className={classes.leftIcon} />
+          {`Go Outside`}
+        </Button>
+      )}
+      {isInsideLocation && currentLocation === 'home' && <HomeActions />}
+      {isInsideLocation && currentLocation === 'beach' && <BeachActions />}
+      {isInsideLocation && currentLocation === 'mall' && <MallActions />}
+      {isInsideLocation && currentLocation === 'gym' && <GymActions />}
+
       <Button
         variant='contained'
         color='secondary'
         className={classes.button}
         onClick={() => {
-          dispatch(passTime(hour, minutes));
-          dispatch(updateSleep(sleep));
-          dispatch(updateHunger(hunger));
+          dispatch(passMinutes(30));
+          dispatch(updateSleep(-2));
+          dispatch(updateHunger(-2));
         }}
       >
         <AccessTime className={classes.leftIcon} />
@@ -70,16 +87,9 @@ function Actions({
 }
 
 const mapStateToProps = state => ({
-  // Stats Values
-  sleepValue: state.liveStats.sleep,
-  hungerValue: state.liveStats.hunger,
-
-  // Time Values
-  currentYear: state.timeInfo.currentYear,
-  currentMonth: state.timeInfo.currentMonth,
-  currentDay: state.timeInfo.currentDay,
-  currentHour: state.timeInfo.currentHour,
-  currentMinutes: state.timeInfo.currentMinutes
+  // Location Info
+  currentLocation: state.locationInfo.currentLocation,
+  isInsideLocation: state.locationInfo.isInsideLocation
 });
 
 export default connect(mapStateToProps)(Actions);

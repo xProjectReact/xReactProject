@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import CurrentImage from '../currentImage/currentImage';
+import CurrentMedia from '../currentMedia/currentMedia';
 import LiveStatus from '../liveStatus/liveStatus';
 import Actions from '../actions/actions';
 import LocationDescription from '../locationDescription/locationDescription';
@@ -11,13 +11,7 @@ import LocationTabs from '../locationTabs/locationTabs';
 import './layout.scss';
 
 function Layout(props) {
-  const currentLocation = props.currentLocation;
-  const visibleLocations = {
-    homeIsVisible: props.homeIsVisible,
-    beachIsVisible: props.beachIsVisible,
-    mallIsVisible: props.mallIsVisible,
-    gymIsVisible: props.gymIsVisible
-  };
+  const { currentLocation, visibleLocations } = props;
 
   return (
     <React.Fragment>
@@ -30,8 +24,8 @@ function Layout(props) {
               <Actions />
             </div>
           </div>
-          <div className='currentImageContainer'>
-            <CurrentImage />
+          <div className='currentMediaContainer'>
+            <CurrentMedia />
           </div>
           <div className='locationDescriptionContainer'>
             <LocationDescription />
@@ -57,11 +51,7 @@ function Layout(props) {
 const mapStateToProps = state => ({
   //  Locations that should be displayed, boolean
   currentLocation: state.locationInfo.currentLocation,
-
-  homeIsVisible: state.locationInfo.visibleLocations.homeIsVisible,
-  beachIsVisible: state.locationInfo.visibleLocations.beachIsVisible,
-  mallIsVisible: state.locationInfo.visibleLocations.mallIsVisible,
-  gymIsVisible: state.locationInfo.visibleLocations.gymIsVisible
+  visibleLocations: state.locationInfo.visibleLocations
 });
 
 export default connect(mapStateToProps)(Layout);

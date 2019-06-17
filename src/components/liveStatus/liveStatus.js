@@ -11,22 +11,17 @@ import Divider from '@material-ui/core/Divider';
 import ProgressBar from '../progressBar/progressBar';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 /*  Mood Icons */
 import SentimentSatisfied from '@material-ui/icons/SentimentSatisfied';
 import SentimentVerySatisfied from '@material-ui/icons/SentimentVerySatisfied';
 import SentimentDissatisfied from '@material-ui/icons/SentimentDissatisfied';
 import SentimentVeryDissatisfied from '@material-ui/icons/SentimentVeryDissatisfied';
-
-/* Sleep Icons */
 import OfflineBolt from '@material-ui/icons/OfflineBolt';
-
-/* Health Icons */
 import LocalHospital from '@material-ui/icons/LocalHospital';
-// import Accessibility from '@material-ui/icons/Accessibility';
-
-/* Arousal Icons */
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import { faShower, faUtensils } from '@fortawesome/free-solid-svg-icons';
 
 import './liveStatus.scss';
 
@@ -56,23 +51,17 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function LiveStatus({
-  // Stats Values
-  moodValue,
-  sleepValue,
-  healthValue,
-  cleanlinessValue,
-  hungerValue,
-  arousalValue,
-
-  //Time Values
-  currentYear,
-  currentMonth,
-  currentDay,
-  currentHour,
-  currentMinutes
-}) {
+function LiveStatus(props) {
   const classes = useStyles();
+  const {
+    moodValue,
+    sleepValue,
+    healthValue,
+    cleanlinessValue,
+    hungerValue,
+    arousalValue,
+    currentDate
+  } = props;
 
   const moodIcon =
     moodValue < 25 ? (
@@ -85,16 +74,21 @@ function LiveStatus({
       <SentimentVerySatisfied className={classes.icons} />
     );
 
+  let dateOptions = {
+    hour12: false,
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit'
+  };
+
   return (
     <List className={classes.root}>
       <ListItem className={classes.timeInfoContainer}>
         <Paper className={classes.timeInfo}>
           <Typography variant='h5' component='h3'>
-            {`${currentDay} / ${currentMonth} / ${currentYear}`}
-            <br />
-            {`${String(currentHour).padStart(2, '0')} : ${String(
-              currentMinutes
-            ).padStart(2, '0')}`}
+            {currentDate.toLocaleString('en-US', dateOptions)}
           </Typography>
         </Paper>
       </ListItem>
@@ -136,7 +130,7 @@ function LiveStatus({
       <ListItem>
         <ListItemAvatar>
           <Avatar className={classes.avatarContainer}>
-            {/* <ImageIcon /> */}
+            <FontAwesomeIcon className={classes.icons} icon={faShower} />
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary='Cleanliness' />
@@ -148,7 +142,7 @@ function LiveStatus({
       <ListItem>
         <ListItemAvatar>
           <Avatar className={classes.avatarContainer}>
-            {/* <WorkIcon /> */}
+            <FontAwesomeIcon className={classes.icons} icon={faUtensils} />
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary='Hunger' />
@@ -182,11 +176,7 @@ const mapStateToProps = state => ({
   arousalValue: state.liveStats.arousal,
 
   // Time Values
-  currentYear: state.timeInfo.currentYear,
-  currentMonth: state.timeInfo.currentMonth,
-  currentDay: state.timeInfo.currentDay,
-  currentHour: state.timeInfo.currentHour,
-  currentMinutes: state.timeInfo.currentMinutes
+  currentDate: state.timeInfo.currentDate
 });
 
 export default connect(mapStateToProps)(LiveStatus);

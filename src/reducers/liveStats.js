@@ -15,12 +15,30 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_SLEEP:
+      let updatedSleep = state.sleep;
+
+      updatedSleep += action.value;
+      if (updatedSleep < 0) {
+        updatedSleep = 0;
+      } else if (updatedSleep > 100) {
+        updatedSleep = 100;
+      }
+
       return Object.assign({}, state, {
-        sleep: action.value
+        sleep: updatedSleep
       });
     case UPDATE_HUNGER:
+      let updatedHunger = state.hunger;
+
+      updatedHunger += action.value;
+      if (updatedHunger < 0) {
+        updatedHunger = 0;
+      } else if (updatedHunger > 100) {
+        updatedHunger = 100;
+      }
+
       return Object.assign({}, state, {
-        hunger: action.value
+        hunger: updatedHunger
       });
 
     default:
