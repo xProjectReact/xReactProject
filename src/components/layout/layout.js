@@ -18,8 +18,10 @@ function Layout(props) {
       <CssBaseline />
       <Container maxWidth='xl'>
         <div className='homeContainer'>
-          <div className='liveStatusContainer'>
-            <LiveStatus />
+          <div className='statusActionsContainer'>
+            <div className='liveStatusContainer'>
+              <LiveStatus />
+            </div>
             <div className='actionsContainer'>
               <Actions />
             </div>

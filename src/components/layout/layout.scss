@@ -2,20 +2,22 @@
   height: 100vh;
   border-left: 3px solid wheat;
   border-right: 3px solid wheat;
+  border-radius: 8px;
 
-  & .liveStatusContainer {
+  & .statusActionsContainer {
     position: absolute;
     right: 3vw;
     top: 2vh;
     width: 26vw;
-  }
 
-  & .actionsContainer {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    background-color: wheat;
-    top: 1vh;
+    & .actionsContainer {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background-color: wheat;
+      top: 1vh;
+      border-radius: 4px;
+    }
   }
 
   & .currentMediaContainer {

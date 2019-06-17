@@ -1,7 +1,7 @@
 import { UPDATE_CURRENT_MEDIA } from '../actions/types';
 
 const initialState = {
-  path: 'default.webp'
+  path: 'locations/fromInside/home.webp'
 };
 
 export default (state = initialState, action) => {

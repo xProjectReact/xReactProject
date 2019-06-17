@@ -6,14 +6,15 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  description: 'default',
+  description: 'Your beloved small house.',
   currentLocation: 'home',
-  isInsideLocation: false,
+  isInsideLocation: true,
   visibleLocations: {
     homeIsVisible: true,
     beachIsVisible: true,
     mallIsVisible: true,
-    gymIsVisible: true
+    gymIsVisible: true,
+    caffeIsVisible: true
   }
 };
 

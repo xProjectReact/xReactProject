@@ -28,7 +28,8 @@ import './liveStatus.scss';
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    backgroundColor: 'wheat'
+    backgroundColor: 'wheat',
+    borderRadius: '4px'
   },
   progressBarPosition: {
     position: 'absolute',
